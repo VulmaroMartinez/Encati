@@ -25,11 +25,13 @@ public class Controller extends HttpServlet {
 
         switch (actionC) {
             case "findAll":
-                List<TienditaBean> tienditas = daoTiendita.findAll();
+
+                List encuestas = daoEncuesta.findAll();
+                req.setAttribute("encuestas", encuestas);
+
+                List tienditas = daoTiendita.findAll();
                 req.setAttribute("tienditas", tienditas);
 
-                List<EncuestaBean> encuestas = daoEncuesta.findAll();
-                req.setAttribute("encuesta", encuestas);
 
                 req.getRequestDispatcher("/index.jsp").forward(req, resp);
 

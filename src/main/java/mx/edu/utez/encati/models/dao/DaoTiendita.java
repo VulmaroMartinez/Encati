@@ -4,15 +4,9 @@ import com.mysql.cj.jdbc.CallableStatementWrapper;
 import mx.edu.utez.encati.models.TienditaBean;
 import mx.edu.utez.encati.utils.MysqlConector;
 
-import java.io.InputStream;
-import java.io.Reader;
-import java.math.BigDecimal;
-import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
 public class DaoTiendita {
 
@@ -35,7 +29,7 @@ public class DaoTiendita {
         }
     }
 
-    public List findAll() {
+    public List<TienditaBean> findAll() {
         List<TienditaBean> tienditas = new ArrayList<>();
         MysqlConector conector = new MysqlConector();
         Connection connect = conector.connect();

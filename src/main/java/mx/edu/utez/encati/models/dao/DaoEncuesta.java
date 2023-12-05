@@ -12,8 +12,9 @@ import java.util.List;
 
 public class DaoEncuesta {
 
-    public List findAll(){
+    public List<EncuestaBean> findAll(){
         List<EncuestaBean> encuestas = new ArrayList<>();
+
         MysqlConector conector = new MysqlConector();
         Connection connect = conector.connect();
 
