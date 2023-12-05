@@ -1,14 +1,14 @@
 package mx.edu.utez.encati.models;
 
 public class TienditaBean {
-    private Integer id_tiendita;
+    private String id_tiendita;
     private String nombre;
 
-    public Integer getId_tiendita() {
+    public String getId_tiendita() {
         return id_tiendita;
     }
 
-    public void setId_tiendita(Integer id_tiendita) {
+    public void setId_tiendita(String id_tiendita) {
         this.id_tiendita = id_tiendita;
     }
 
@@ -20,7 +20,7 @@ public class TienditaBean {
         this.nombre = nombre;
     }
 
-    public TienditaBean(Integer id_tiendita, String nombre) {
+    public TienditaBean(String id_tiendita, String nombre) {
         this.id_tiendita = id_tiendita;
         this.nombre = nombre;
     }

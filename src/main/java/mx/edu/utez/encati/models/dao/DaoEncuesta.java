@@ -24,7 +24,7 @@ public class DaoEncuesta {
 
             while(rs.next()){
                 EncuestaBean encuesta = new EncuestaBean();
-                encuesta.setId_encuesta(rs.getInt("id_encuesta"));
+                encuesta.setId_encuesta(rs.getString("id_encuesta"));
                 encuesta.setNombre(rs.getString("nombre"));
 
                 encuestas.add(encuesta);

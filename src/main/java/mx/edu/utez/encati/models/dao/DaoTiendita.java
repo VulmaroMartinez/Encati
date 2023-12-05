@@ -26,7 +26,7 @@ public class DaoTiendita {
 
             while(rs.next()){
                 TienditaBean tiendita = new TienditaBean();
-                tiendita.setId_tiendita(rs.getInt("id_tiendita"));
+                tiendita.setId_tiendita(rs.getString("id_tiendita"));
                 tiendita.setNombre(rs.getString("nombre"));
             }
 
@@ -45,7 +45,7 @@ public class DaoTiendita {
 
             while(rs.next()){
                 TienditaBean tiendita = new TienditaBean();
-                tiendita.setId_tiendita(rs.getInt("id_tiendita"));
+                tiendita.setId_tiendita(rs.getString("id_tiendita"));
                 tiendita.setNombre(rs.getString("nombre"));
 
                 tienditas.add(tiendita);

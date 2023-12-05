@@ -21,21 +21,22 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<TienditaBean> tienditas = daoTiendita.findAll();
-        req.setAttribute("tienditas", tienditas);
+        String actionC = req.getParameter("actionC");
 
-        List<EncuestaBean> encuestas = daoEncuesta.findAll();
-        req.setAttribute("encuesta", encuestas);
+        switch (actionC) {
+            case "findAll":
+                List<TienditaBean> tienditas = daoTiendita.findAll();
+                req.setAttribute("tienditas", tienditas);
 
-        req.getRequestDispatcher("/index.jsp").forward(req, resp);
+                List<EncuestaBean> encuestas = daoEncuesta.findAll();
+                req.setAttribute("encuesta", encuestas);
 
-        for (TienditaBean tienditaBean : tienditas) {
-            System.out.println("Nombres tiendas: " + tienditaBean.getNombre());
+                req.getRequestDispatcher("/index.jsp").forward(req, resp);
+
+
+                break;
         }
 
-        for (EncuestaBean encuestaBean : encuestas) {
-            System.out.println("Nombres: " + encuestaBean.getNombre());
-        }
     }
 
     @Override

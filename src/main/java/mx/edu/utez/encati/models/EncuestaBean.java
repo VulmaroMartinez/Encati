@@ -1,14 +1,14 @@
 package mx.edu.utez.encati.models;
 
 public class EncuestaBean {
-    private Integer id_encuesta;
+    private String id_encuesta;
     private String nombre;
 
-    public Integer getId_encuesta() {
+    public String getId_encuesta() {
         return id_encuesta;
     }
 
-    public void setId_encuesta(Integer id_encuesta) {
+    public void setId_encuesta(String id_encuesta) {
         this.id_encuesta = id_encuesta;
     }
 
@@ -20,7 +20,7 @@ public class EncuestaBean {
         this.nombre = nombre;
     }
 
-    public EncuestaBean(Integer id_encuesta, String nombre) {
+    public EncuestaBean(String id_encuesta, String nombre) {
         this.id_encuesta = id_encuesta;
         this.nombre = nombre;
     }
