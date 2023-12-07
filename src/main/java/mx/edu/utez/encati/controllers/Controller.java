@@ -1,7 +1,6 @@
 package mx.edu.utez.encati.controllers;
 
-import mx.edu.utez.encati.models.EncuestaBean;
-import mx.edu.utez.encati.models.TienditaBean;
+
 import mx.edu.utez.encati.models.dao.DaoEncuesta;
 import mx.edu.utez.encati.models.dao.DaoTiendita;
 
@@ -32,10 +31,7 @@ public class Controller extends HttpServlet {
                 List tienditas = daoTiendita.findAll();
                 req.setAttribute("tienditas", tienditas);
 
-
                 req.getRequestDispatcher("/index.jsp").forward(req, resp);
-
-
                 break;
         }
 
@@ -43,11 +39,6 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        switch (action){
-            case "Guardar" :
 
-                break;
-        }
     }
 }

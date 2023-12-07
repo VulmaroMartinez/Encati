@@ -149,6 +149,7 @@
             <td class="pregunta" id="Usabilidad">
                 <div class="face" id="opcUs">
                     <div class="mala" onclick="copiarPropiedadesUs(this)">
+
                         <i class="bi bi-emoji-angry-fill"></i>
                     </div>
                     <div class="regular" onclick="copiarPropiedadesUs(this)">
@@ -320,6 +321,7 @@
 
     </table>
 
+
     <div class="por">
         <div class="c">
             <div class="palabra">
@@ -335,10 +337,9 @@
         <button type="button" class="btn " style="background-color: #021024 !important; color: #c1e8ff;"
                 onclick="location.reload()">Cancelar
         </button>
-        <button type="submit" id="guardarBtn" class="btn " value="Guardar" name="action"
-                style="background-color: rgb(119, 120, 121); color: aliceblue;">Guardar
+        <button type="button" id="guardarBtn" class="btn " style="background-color: rgb(119, 120, 121); color: aliceblue;">Guardar
         </button>
-
+        <button
     </div>
 </div>
 
