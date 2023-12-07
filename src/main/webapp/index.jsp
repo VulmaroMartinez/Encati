@@ -339,7 +339,8 @@
         </button>
         <button type="button" id="guardarBtn" class="btn " style="background-color: rgb(119, 120, 121); color: aliceblue;">Guardar
         </button>
-        <button
+
+        <button></button>
     </div>
 </div>
 
