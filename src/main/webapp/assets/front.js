@@ -344,15 +344,15 @@ function guardarRespuestas() {
 
     xhr.setRequestHeader('Content-Type', 'application/json');
 
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            //éxito
-            alert("Respuestas guardadas!");
-        } else {
-            //hubo algún error
-            alert("Error al guardar las respuestas");
-        }
+    if (xhr.status === 200) {
+        console.log("ya");
+        mostrarexito();
+    } else {
+        // hubo algún error
+        console.log("no");
+        mostrarfalse();
     }
+
 
     var data = {
         tienda: tienda,

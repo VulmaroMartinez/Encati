@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class MysqlConector {
     final String DBNAME = "encati",
             USER = "root",
-            PASSWORD = "root",
+            PASSWORD = "",
             TIMEZONE = "America/Mexico_City",
             USESSL = "false",
             PUBLICKEY = "true",

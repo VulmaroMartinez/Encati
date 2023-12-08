@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/mejorado.css">
+
     <title>ENCATI</title>
 </head>
 <body style="font-family: 'Quicksand', sans-serif;">
@@ -24,7 +25,11 @@
                 ENCATI
             </a>
             <form class="d-flex" role="search">
-                <i class="bi bi-shop" style="margin-right: .5rem; color:white; font-size: 1.6rem;"></i>
+
+                <div class="for_i" >
+                    <i class="bi bi-shop" style="margin-right: .5rem; color:white; font-size: 1.2rem;"></i>
+                    Tienditas
+                </div>
                 <select class="form-select" aria-label="Seleccione una tiendita" style="text-align: center;"
                         id="tienda">
                     <option selected>Seleccionar la tienda</option>
@@ -33,8 +38,10 @@
                     </c:forEach>
                 </select>
 
-                <i class="bi bi-calendar-date-fill"
-                   style="margin-right: .5rem; color:white; font-size: 1.6rem; margin-left: .5rem;"></i>
+                <div class="for_i" >
+                    <i class="bi bi-calendar-check" style=" margin-right: .5rem; color:white; font-size: 1.2rem; margin-left: .5rem; margin-bottom: 0px;"></i>
+                    Encuestas
+                </div>
                 <select class="form-select" aria-label="Seleccione una encuesta" style="text-align: center;"
                         id="encuesta">
                     <option selected>Seleccionar encuesta</option>
@@ -352,5 +359,26 @@
 </div>
 
 </body>
+
 <script src="assets/front.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function mostrarexito() {
+        console.log("Éxito");
+        Swal.fire({
+            title: "Respuestas guardadas!",
+            text: "Éxito!",
+            icon: "success"
+        });
+    }
+
+    function mostrarfalse() {
+        console.log("Error");
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "No se guardaron las respuestas"
+        });
+    }
+</script>
 </html>
