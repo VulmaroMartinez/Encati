@@ -1,6 +1,6 @@
 .content{
     width: 90%;
-    margin: 5rem auto 0rem;
+    margin: 5rem auto 0;
     box-shadow: 10px 10px 16px rgba(0, 0, 0, 0.2);
     padding: 0.7rem;
     border-radius: 10px;
@@ -32,9 +32,15 @@ td{
     border-right: .2rem solid #001256;
 
 }
+
+a{
+    text-decoration: none;
+    color: #c1e8ff;
+}
 h3{
     font-size: 1.5rem;
     font-weight: 700;
+    text-align: center;
 }
 td h3{
     width: 13rem;
@@ -102,6 +108,7 @@ tr{
 }
 p .porcentaje{
     margin-bottom: 1px !important;
+
 }
 p .palabra{
     margin-bottom: 1px !important;
@@ -114,4 +121,12 @@ p .palabra{
     border-radius: 15px;
     font-weight: 700;
     font-size: 1.2rem;
+}
+.for_i{
+    display: table-column;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    color: #c1e8ff;
+    font-size: .8rem;
 }

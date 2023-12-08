@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
-    <script src="assets/front.js"></script>
     <link rel="stylesheet" href="assets/mejorado.css">
     <title>ENCATI</title>
 </head>
@@ -21,12 +20,11 @@
     <nav class="navbar bg-body fixed-top" style="background-color: #021024 !important; position: absolute !important; ">
         <div class="container-fluid">
             <a class="navbar-brand" href="#" style="color: #c1e8ff;">
-                <img src="logoA.png" alt="Logo" width="39" height="33" class="d-inline-block align-text-top">
+                <img src="assets/img/logoA.png" alt="Logo" width="39" height="33" class="d-inline-block align-text-top">
                 ENCATI
             </a>
-            <form action="controller" method="post" class="d-flex" role="search">
+            <form class="d-flex" role="search">
                 <i class="bi bi-shop" style="margin-right: .5rem; color:white; font-size: 1.6rem;"></i>
-
                 <select class="form-select" aria-label="Seleccione una tiendita" style="text-align: center;"
                         id="tienda">
                     <option selected>Seleccionar la tienda</option>
@@ -149,7 +147,6 @@
             <td class="pregunta" id="Usabilidad">
                 <div class="face" id="opcUs">
                     <div class="mala" onclick="copiarPropiedadesUs(this)">
-
                         <i class="bi bi-emoji-angry-fill"></i>
                     </div>
                     <div class="regular" onclick="copiarPropiedadesUs(this)">
@@ -321,7 +318,6 @@
 
     </table>
 
-
     <div class="por">
         <div class="c">
             <div class="palabra">
@@ -333,17 +329,28 @@
         </div>
 
     </div>
+
     <div class="buttons">
+
         <button type="button" class="btn " style="background-color: #021024 !important; color: #c1e8ff;"
-                onclick="location.reload()">Cancelar
+                onclick="limpiar()">Limpiar
         </button>
-        <button type="button" id="guardarBtn" class="btn " style="background-color: rgb(119, 120, 121); color: aliceblue;">Guardar
+        <button type="button" id="guardarBtn" class="btn "
+                style="background-color: rgb(119, 120, 121); color: aliceblue;" onclick="location.reload()" disabled>Guardar
         </button>
 
-        <button></button>
     </div>
+
+    <button type="button" class="btn " style="background-color: #fff; border: 2px  solid#001256;"
+            onclick="location.reload()">Cancelar
+    </button>
+
+    <button type="button" class="btn "
+            style="background-color: #001256; color: #c1e8ff; position: absolute; right: 7rem;"><a href="resumen.jsp">Resumen</a>
+    </button>
+
 </div>
 
-
 </body>
+<script src="assets/front.js"></script>
 </html>

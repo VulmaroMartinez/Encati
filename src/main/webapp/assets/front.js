@@ -9,13 +9,53 @@ function validar() {
 
 var po = 0;
 var f, c, u, r, m, p, s, com;
-var guardarBtn = document.getElementById("guardarBtn");
-var encuestaSelect = document.getElementById("encuesta");
+
+function actualizarPorcentaje() {
+    if (f == null || c == null || u == null || s == null || m == null || r == null || com == null || p == null) {
+        return;
+    }
+
+    var nuevoPo = ((p + u + c + com + s + f + r + m) * 100) / 32;
+
+    var poStr = nuevoPo.toString();
+    if (poStr.includes(".")) {
+        var partes = poStr.split(".");
+        if (partes[1].length > 2) {
+            nuevoPo = nuevoPo.toFixed(2); // Redondea a 2 decimales
+        }
+    }
+
+    po = nuevoPo;
+
+    var porcentaje = document.getElementById("porcentaje");
+    porcentaje.textContent = po + "%";
+
+    var guardarBtn = document.getElementById("guardarBtn");
+    guardarBtn.disabled = false;
+    guardarBtn.style.backgroundColor = "rgb(0,18,86)";
+
+
+    var contenido = porcentaje.innerHTML;
+    var numero = parseFloat(contenido);
+
+    if (numero >= 0 && numero <= 69) {
+        porcentaje.style.backgroundColor = "red";
+    } else if (numero >= 70 && numero <= 89) {
+        porcentaje.style.backgroundColor = "darkgoldenrod";
+    } else if (numero >= 90 && numero <= 95) {
+        porcentaje.style.backgroundColor = "green";
+    } else if (numero >= 96 && numero <= 100) {
+        porcentaje.style.backgroundColor = "blue";
+    } else {
+        porcentaje.style.backgroundColor = "black";
+    }
+}
 
 function copiarPropiedades(elemento) {
     if (!validar()) {
         return;
     }
+
     var resFun = document.getElementById("respFun");
     var row = document.getElementById("Funcionalidad");
 
@@ -25,46 +65,20 @@ function copiarPropiedades(elemento) {
     resFun.style.color = color;
     resFun.innerHTML = icon + "<br>" + text;
 
-    f = 0;
+    f = obtenerValor(color);
+
     row.style.backgroundColor = "rgba" + color.slice(3, -1) + ", 0.2)";
-    if (color === "rgb(220, 20, 60)") {
-        f = 0;
-    } else if (color === "rgb(255, 140, 0)") {
-        f = 1;
-    } else if (color === "rgb(255, 215, 0)") {
-        f = 2;
-    } else if (color === "rgb(46, 139, 87)") {
-        f = 3;
-    } else if (color === "rgb(30, 144, 255)") {
-        f = 4;
-    }
-    if (f == null || c == null || u == null || s == null || m == null || r == null || com == null || p == null) {
 
-    } else {
-        var po = ((p + u + c + com + s + f + r + m) * 100) / 32;
-
-        var poStr = po.toString();
-        if (poStr.includes(".")) {
-            var partes = poStr.split(".");
-            if (partes[1].length > 2) {
-                po = po.toFixed(2); // Redondea a 2 decimales
-            }
-        }
-
-        po = po + "%";
-
-        var porcentaje = document.getElementById("porcentaje");
-        porcentaje.textContent = po;
-    }
-
+    actualizarPorcentaje();
 }
-
 
 function copiarPropiedadesConf(elemento) {
     if (!validar()) {
         return;
     }
-    var resFun = document.getElementById("resConf");
+
+    var resConf = document.getElementById("resConf");
+    var row = document.getElementById("Confiabilidad");
 
     var color = window.getComputedStyle(elemento).color;
     var icon = elemento.querySelector("i").outerHTML;
@@ -72,49 +86,21 @@ function copiarPropiedadesConf(elemento) {
 
     resConf.style.color = color;
     resConf.innerHTML = icon + "<br>" + text;
-    var row = document.getElementById("Confiabilidad");
+
+    c = obtenerValor(color);
 
     row.style.backgroundColor = "rgba" + color.slice(3, -1) + ", 0.2)";
 
-    c = 0;
-    row.style.backgroundColor = "rgba" + color.slice(3, -1) + ", 0.2)";
-    if (color === "rgb(220, 20, 60)") {
-        c = 0;
-    } else if (color === "rgb(255, 140, 0)") {
-        c = 1;
-    } else if (color === "rgb(255, 215, 0)") {
-        c = 2;
-    } else if (color === "rgb(46, 139, 87)") {
-        c = 3;
-    } else if (color === "rgb(30, 144, 255)") {
-        c = 4;
-    }
-
-    if (f == null || c == null || u == null || s == null || m == null || r == null || com == null || p == null) {
-
-    } else {
-        var po = ((p + u + c + com + s + f + r + m) * 100) / 32;
-
-        var poStr = po.toString();
-        if (poStr.includes(".")) {
-            var partes = poStr.split(".");
-            if (partes[1].length > 2) {
-                po = po.toFixed(2); // Redondea a 2 decimales
-            }
-        }
-
-        po = po + "%";
-
-        var porcentaje = document.getElementById("porcentaje");
-        porcentaje.textContent = po;
-    }
+    actualizarPorcentaje();
 }
 
 function copiarPropiedadesUs(elemento) {
     if (!validar()) {
         return;
     }
-    var resFun = document.getElementById("resUs");
+
+    var resUs = document.getElementById("resUs");
+    var row = document.getElementById("Usabilidad");
 
     var color = window.getComputedStyle(elemento).color;
     var icon = elemento.querySelector("i").outerHTML;
@@ -122,49 +108,21 @@ function copiarPropiedadesUs(elemento) {
 
     resUs.style.color = color;
     resUs.innerHTML = icon + "<br>" + text;
-    var row = document.getElementById("Usabilidad");
+
+    u = obtenerValor(color);
 
     row.style.backgroundColor = "rgba" + color.slice(3, -1) + ", 0.2)";
-    u = 0;
-    if (color === "rgb(220, 20, 60)") {
-        u = 0;
-    } else if (color === "rgb(255, 140, 0)") {
-        u = 1;
-    } else if (color === "rgb(255, 215, 0)") {
-        u = 2;
-    } else if (color === "rgb(46, 139, 87)") {
-        u = 3;
-    } else if (color === "rgb(30, 144, 255)") {
-        u = 4;
-    }
 
-
-    if (f == null || c == null || u == null || s == null || m == null || r == null || com == null || p == null) {
-
-    } else {
-        var po = ((p + u + c + com + s + f + r + m) * 100) / 32;
-
-        var poStr = po.toString();
-        if (poStr.includes(".")) {
-            var partes = poStr.split(".");
-            if (partes[1].length > 2) {
-                po = po.toFixed(2); // Redondea a 2 decimales
-            }
-        }
-
-        po = po + "%";
-
-        var porcentaje = document.getElementById("porcentaje");
-        porcentaje.textContent = po;
-    }
-
+    actualizarPorcentaje();
 }
 
 function copiarPropiedadesRen(elemento) {
     if (!validar()) {
         return;
     }
-    var resFun = document.getElementById("resRen");
+
+    var resRen = document.getElementById("resRen");
+    var row = document.getElementById("Rendimiento");
 
     var color = window.getComputedStyle(elemento).color;
     var icon = elemento.querySelector("i").outerHTML;
@@ -172,48 +130,21 @@ function copiarPropiedadesRen(elemento) {
 
     resRen.style.color = color;
     resRen.innerHTML = icon + "<br>" + text;
-    var row = document.getElementById("Rendimiento");
+
+    r = obtenerValor(color);
 
     row.style.backgroundColor = "rgba" + color.slice(3, -1) + ", 0.2)";
 
-    r = 0;
-    if (color === "rgb(220, 20, 60)") {
-        r = 0;
-    } else if (color === "rgb(255, 140, 0)") {
-        r = 1;
-    } else if (color === "rgb(255, 215, 0)") {
-        r = 2;
-    } else if (color === "rgb(46, 139, 87)") {
-        r = 3;
-    } else if (color === "rgb(30, 144, 255)") {
-        r = 4;
-    }
-    if (f == null || c == null || u == null || s == null || m == null || r == null || com == null || p == null) {
-
-    } else {
-        var po = ((p + u + c + com + s + f + r + m) * 100) / 32;
-
-        var poStr = po.toString();
-        if (poStr.includes(".")) {
-            var partes = poStr.split(".");
-            if (partes[1].length > 2) {
-                po = po.toFixed(2); // Redondea a 2 decimales
-            }
-        }
-
-        po = po + "%";
-
-        var porcentaje = document.getElementById("porcentaje");
-        porcentaje.textContent = po;
-    }
-
+    actualizarPorcentaje();
 }
 
 function copiarPropiedadesMan(elemento) {
     if (!validar()) {
         return;
     }
-    var resFun = document.getElementById("resMan");
+
+    var resMan = document.getElementById("resMan");
+    var row = document.getElementById("Mantenimiento");
 
     var color = window.getComputedStyle(elemento).color;
     var icon = elemento.querySelector("i").outerHTML;
@@ -221,47 +152,21 @@ function copiarPropiedadesMan(elemento) {
 
     resMan.style.color = color;
     resMan.innerHTML = icon + "<br>" + text;
-    var row = document.getElementById("Mantenimiento");
+
+    m = obtenerValor(color);
 
     row.style.backgroundColor = "rgba" + color.slice(3, -1) + ", 0.2)";
-    m = 0;
-    if (color === "rgb(220, 20, 60)") {
-        m = 0;
-    } else if (color === "rgb(255, 140, 0)") {
-        m = 1;
-    } else if (color === "rgb(255, 215, 0)") {
-        m = 2;
-    } else if (color === "rgb(46, 139, 87)") {
-        m = 3;
-    } else if (color === "rgb(30, 144, 255)") {
-        m = 4;
-    }
-    if (f == null || c == null || u == null || s == null || m == null || r == null || com == null || p == null) {
 
-    } else {
-        var po = ((p + u + c + com + s + f + r + m) * 100) / 32;
-
-        var poStr = po.toString();
-        if (poStr.includes(".")) {
-            var partes = poStr.split(".");
-            if (partes[1].length > 2) {
-                po = po.toFixed(2); // Redondea a 2 decimales
-            }
-        }
-
-        po = po + "%";
-
-        var porcentaje = document.getElementById("porcentaje");
-        porcentaje.textContent = po;
-    }
-
+    actualizarPorcentaje();
 }
 
 function copiarPropiedadesPor(elemento) {
     if (!validar()) {
         return;
     }
-    var resFun = document.getElementById("resPor");
+
+    var resPor = document.getElementById("resPor");
+    var row = document.getElementById("Portabilidad");
 
     var color = window.getComputedStyle(elemento).color;
     var icon = elemento.querySelector("i").outerHTML;
@@ -269,98 +174,43 @@ function copiarPropiedadesPor(elemento) {
 
     resPor.style.color = color;
     resPor.innerHTML = icon + "<br>" + text;
-    var row = document.getElementById("Portabilidad");
+
+    p = obtenerValor(color);
 
     row.style.backgroundColor = "rgba" + color.slice(3, -1) + ", 0.2)";
 
-    p = 0;
-    if (color === "rgb(220, 20, 60)") {
-        p = 0;
-    } else if (color === "rgb(255, 140, 0)") {
-        p = 1;
-    } else if (color === "rgb(255, 215, 0)") {
-        p = 2;
-    } else if (color === "rgb(46, 139, 87)") {
-        p = 3;
-    } else if (color === "rgb(30, 144, 255)") {
-        p = 4;
-    }
-
-    if (f == null || c == null || u == null || s == null || m == null || r == null || com == null || p == null) {
-
-    } else {
-        var po = ((p + u + c + com + s + f + r + m) * 100) / 32;
-
-        var poStr = po.toString();
-        if (poStr.includes(".")) {
-            var partes = poStr.split(".");
-            if (partes[1].length > 2) {
-                po = po.toFixed(2); // Redondea a 2 decimales
-            }
-        }
-
-        po = po + "%";
-
-        var porcentaje = document.getElementById("porcentaje");
-        porcentaje.textContent = po;
-    }
-
+    actualizarPorcentaje();
 }
-
-//Tengo un save en el Dao, pero no se como relacionar la pregunta con el valor que se le asigna a cada pregunta y así guardarlo en la base de datos
 
 function copiarPropiedadesSeg(elemento) {
     if (!validar()) {
         return;
     }
-    var resFun = document.getElementById("resSeg");
+
+    var resSeg = document.getElementById("resSeg");
+    var row = document.getElementById("Seguridad");
+
     var color = window.getComputedStyle(elemento).color;
     var icon = elemento.querySelector("i").outerHTML;
     var text = elemento.textContent;
 
     resSeg.style.color = color;
     resSeg.innerHTML = icon + "<br>" + text;
-    var row = document.getElementById("Seguridad");
+
+    s = obtenerValor(color);
 
     row.style.backgroundColor = "rgba" + color.slice(3, -1) + ", 0.2)";
-    s = 0;
-    if (color === "rgb(220, 20, 60)") {
-        s = 0;
-    } else if (color === "rgb(255, 140, 0)") {
-        s = 1;
-    } else if (color === "rgb(255, 215, 0)") {
-        s = 2;
-    } else if (color === "rgb(46, 139, 87)") {
-        s = 3;
-    } else if (color === "rgb(30, 144, 255)") {
-        s = 4;
-    }
 
-    if (f == null || c == null || u == null || s == null || m == null || r == null || com == null || p == null) {
-
-    } else {
-        var po = ((p + u + c + com + s + f + r + m) * 100) / 32;
-
-        var poStr = po.toString();
-        if (poStr.includes(".")) {
-            var partes = poStr.split(".");
-            if (partes[1].length > 2) {
-                po = po.toFixed(2); // Redondea a 2 decimales
-            }
-        }
-
-        po = po + "%";
-
-        var porcentaje = document.getElementById("porcentaje");
-        porcentaje.textContent = po;
-    }
+    actualizarPorcentaje();
 }
 
 function copiarPropiedadesCom(elemento) {
     if (!validar()) {
         return;
     }
-    var resFun = document.getElementById("resCom");
+
+    var resCom = document.getElementById("resCom");
+    var row = document.getElementById("Compatibilidad");
 
     var color = window.getComputedStyle(elemento).color;
     var icon = elemento.querySelector("i").outerHTML;
@@ -369,44 +219,67 @@ function copiarPropiedadesCom(elemento) {
     resCom.style.color = color;
     resCom.innerHTML = icon + "<br>" + text;
 
-    var row = document.getElementById("Compatibilidad");
+    com = obtenerValor(color);
 
     row.style.backgroundColor = "rgba" + color.slice(3, -1) + ", 0.2)";
-    com = 0;
-    if (color === "rgb(220, 20, 60)") {
-        com = 0;
-    } else if (color === "rgb(255, 140, 0)") {
-        com = 1;
-    } else if (color === "rgb(255, 215, 0)") {
-        com = 2;
-    } else if (color === "rgb(46, 139, 87)") {
-        com = 3;
-    } else if (color === "rgb(30, 144, 255)") {
-        com = 4;
-    }
 
-    if (f == null || c == null || u == null || s == null || m == null || r == null || com == null || p == null) {
+    actualizarPorcentaje();
+}
 
-    } else {
-        var po = ((p + u + c + com + s + f + r + m) * 100) / 32;
-
-        var poStr = po.toString();
-        if (poStr.includes(".")) {
-            var partes = poStr.split(".");
-            if (partes[1].length > 2) {
-                po = po.toFixed(2); // Redondea a 2 decimales
-            }
-        }
-
-        po = po + "%";
-
-        var porcentaje = document.getElementById("porcentaje");
-        porcentaje.textContent = po;
+function obtenerValor(color) {
+    switch (color) {
+        case "rgb(220, 20, 60)":
+            return 0;
+        case "rgb(255, 140, 0)":
+            return 1;
+        case "rgb(255, 215, 0)":
+            return 2;
+        case "rgb(46, 139, 87)":
+            return 3;
+        case "rgb(30, 144, 255)":
+            return 4;
+        default:
+            return 0;
     }
 }
 
+
+function limpiar() {
+    po = null;
+    f = c = u = r = m = p = s = com = null;
+
+    // Resetear estilos y contenido de respuestas
+    resetearElemento("respFun", "Funcionalidad");
+    resetearElemento("resConf", "Confiabilidad");
+    resetearElemento("resUs", "Usabilidad");
+    resetearElemento("resRen", "Rendimiento");
+    resetearElemento("resMan", "Mantenimiento");
+    resetearElemento("resPor", "Portabilidad");
+    resetearElemento("resSeg", "Seguridad");
+    resetearElemento("resCom", "Compatibilidad");
+
+
+    var porcentaje = document.getElementById("porcentaje");
+    porcentaje.textContent = "0%";
+    porcentaje.style.backgroundColor = "";
+
+    var guardarBtn = document.getElementById("guardarBtn");
+    guardarBtn.disabled = true;
+    guardarBtn.style.backgroundColor = "rgb(119, 120, 121)";
+}
+
+function resetearElemento(respuestaId, rowId) {
+    var respuesta = document.getElementById(respuestaId);
+    respuesta.style.color = "";
+    respuesta.innerHTML = "";
+
+    var row = document.getElementById(rowId);
+    row.style.backgroundColor = "";
+}
+
+
 var guardarBtn = document.getElementById("guardarBtn");
-guardarBtn.addEventListener("click,", guardarRespuestas);
+guardarBtn.addEventListener("click", guardarRespuestas);
 
 function guardarRespuestas() {
     if (!validar()) {
@@ -428,19 +301,54 @@ function guardarRespuestas() {
     var respS = (s + 1);
     var respCom = (com + 1);
 
-    var respuestas = [respF, respC, respU, respR, respM, respP, respS, respCom];
+    var respuestas = [
+        {
+            pregunta_id: "P1",
+            valor: respF
+        },
+        {
+            pregunta_id: "P2",
+            valor: respC
+        },
+        {
+            pregunta_id: "P3",
+            valor: respU
+        },
+        {
+            pregunta_id: "P4",
+            valor: respR
+        },
+        {
+            pregunta_id: "P5",
+            valor: respM
+        },
+        {
+            pregunta_id: "P6",
+            valor: respP
+        },
+        {
+            pregunta_id: "P7",
+            valor: respS
+        },
+        {
+            pregunta_id: "P8",
+            valor: respCom
+        }
+    ];
+
+    //¿por que no me jala mi ajax?
+    //
 
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/controller');
+    xhr.open('POST', 'controller');
 
     xhr.setRequestHeader('Content-Type', 'application/json');
 
-    xhr.onload = function() {
-        if(xhr.status === 200) {
+    xhr.onload = function () {
+        if (xhr.status === 200) {
             //éxito
             alert("Respuestas guardadas!");
-        }
-        else {
+        } else {
             //hubo algún error
             alert("Error al guardar las respuestas");
         }
