@@ -278,6 +278,8 @@ function resetearElemento(respuestaId, rowId) {
 }
 
 
+
+
 var guardarBtn = document.getElementById("guardarBtn");
 guardarBtn.addEventListener("click", guardarRespuestas);
 
@@ -344,23 +346,61 @@ function guardarRespuestas() {
 
     xhr.setRequestHeader('Content-Type', 'application/json');
 
-    if (xhr.status === 200) {
-        console.log("ya");
-        mostrarexito();
-    } else {
-        // hubo algún error
-        console.log("no");
-        mostrarfalse();
-    }
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                console.log("ya");
+                mostrarexito();
+            } else if (xhr.status === 409) {
+                // Código 409 Conflict, la tienda ya ha respondido a esa encuesta
+                console.log("La tienda ya ha respondido a esta encuesta.");
+                error409();
+            } else {
+                // Otro código de estado, manejar según sea necesario
+                console.log("Error en la solicitud: " + xhr.status);
+                mostrarfalse();
+            }
+        }
+    };
 
 
-    var data = {
-        tienda: tienda,
-        encuesta: encuesta,
-        respuestas: respuestas
-    }
-
-    xhr.send(JSON.stringify(data));
-    console.log(JSON.stringify(data));
+var data = {
+    tienda: tienda,
+    encuesta: encuesta,
+    respuestas: respuestas
 }
 
+xhr.send(JSON.stringify(data));
+console.log(JSON.stringify(data));
+}
+
+document.getElementById('encuesta').addEventListener('change', function () {
+    var tiendaId = document.getElementById('tienda').value;
+    var encuestaId = encuestaSelect.options[encuestaSelect.selectedIndex].value;
+
+    if (tiendaId !== '' && encuestaId !== '') {
+        // Realiza una solicitud AJAX para obtener los datos del servlet
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Parsea el JSON recibido
+                var valores = JSON.parse(xhr.responseText);
+
+                // Accede al contenedor HTML y muestra los valores
+                //Aquí va el código de anett para mostrarlos en el front
+
+            }
+        };
+
+        // Reemplaza 'controller' con la URL de tu servlet
+        xhr.open('GET', 'controller?tiendaId=' + tiendaId + '&encuestaId=' + encuestaId, true);
+        xhr.send();
+    }
+});
+
+function redirigirTienditasPorcentaje() {
+    var encuestaSelect = document.getElementById("encuesta")
+    var encuestaId = encuestaSelect.options[encuestaSelect.selectedIndex].value;
+
+    window.location.href = "resumencontroller?encuestaId=" + encuestaId;
+}

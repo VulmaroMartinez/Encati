@@ -1,6 +1,7 @@
 package mx.edu.utez.encati.models.dao;
 
 import mx.edu.utez.encati.models.EncuestaBean;
+import mx.edu.utez.encati.models.ResumenBean;
 import mx.edu.utez.encati.utils.MysqlConector;
 
 import java.sql.Connection;
@@ -14,12 +15,10 @@ public class DaoEncuesta {
 
     public List<EncuestaBean> findAll(){
         List<EncuestaBean> encuestas = new ArrayList<>();
-
         MysqlConector conector = new MysqlConector();
         Connection connect = conector.connect();
 
         try{
-
             PreparedStatement stmt = connect.prepareStatement("SELECT * FROM encuestas");
             ResultSet rs = stmt.executeQuery();
 
@@ -36,4 +35,33 @@ public class DaoEncuesta {
         }
         return encuestas;
     }
+
+    public List<ResumenBean> ObtenerResumen(String encuestaId){
+        List<ResumenBean> resumen = new ArrayList<>();
+        MysqlConector conector = new MysqlConector();
+        Connection connect = conector.connect();
+
+        try{
+            PreparedStatement stmt = connect.prepareStatement(" SELECT t.nombre AS 'Tiendita', AVG((r.valor - 1) / 4.0) * 100 AS 'Porcentaje' FROM tienditas t \n" +
+                    " JOIN respuestas r ON t.id_tiendita = r.tiendita_id" +
+                    " JOIN encuestas e ON r.encuesta_id = e.id_encuesta" +
+                    " WHERE e.id_encuesta = ? GROUP BY t.id_tiendita, e.id_encuesta;");
+
+            stmt.setString(1, encuestaId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()){
+                ResumenBean r = new ResumenBean();
+                r.setTiendita(rs.getString("Tiendita"));
+                r.setPorcentaje(rs.getDouble("Porcentaje"));
+
+                resumen.add(r);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return resumen;
+    }
+
 }

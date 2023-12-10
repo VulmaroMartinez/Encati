@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,11 +30,35 @@ public class Controller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        String tienda = req.getParameter("tiendaId");
+        String encuesta = req.getParameter("encuestaId");
+
         List encuestas = daoEncuesta.findAll();
         req.setAttribute("encuestas", encuestas);
 
         List tienditas = daoTiendita.findAll();
         req.setAttribute("tienditas", tienditas);
+
+
+        if (!daoRespuesta.exists(tienda, encuesta)) {
+            List<Integer> valores = daoRespuesta.obtenerRespuestas(tienda, encuesta);
+
+            // Convierte la lista a un array de int para facilitar la serialización a JSON
+            int[] valoresArray = valores.stream().mapToInt(Integer::intValue).toArray();
+
+
+            try {
+                JSONArray jsonArray = new JSONArray(valoresArray);
+                // Establece el tipo de contenido y escribe la respuesta
+                resp.setContentType("application/json");
+                resp.setCharacterEncoding("UTF-8");
+                resp.getWriter().write(jsonArray.toString());
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
+
+        }
 
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
 
@@ -50,23 +75,25 @@ public class Controller extends HttpServlet {
 
             JSONArray respuestas = jsonObject.getJSONArray("respuestas");
 
-            for (int i = 0; i < respuestas.length(); i++) {
-                JSONObject obj = respuestas.getJSONObject(i);
 
-                String preguntaId = obj.getString("pregunta_id");
-                int valor = obj.getInt("valor");
+                for (int i = 0; i < respuestas.length(); i++) {
+                    JSONObject obj = respuestas.getJSONObject(i);
 
-                RespuestaBean r = new RespuestaBean();
-                r.setId_tiendita(tienditaId);
-                r.setId_encuesta(encuestaId);
-                r.setId_pregunta(preguntaId);
-                r.setValor(valor);
+                    String preguntaId = obj.getString("pregunta_id");
+                    int valor = obj.getInt("valor");
 
-                daoRespuesta.save(r);
+                    RespuestaBean r = new RespuestaBean();
+                    r.setId_tiendita(tienditaId);
+                    r.setId_encuesta(encuestaId);
+                    r.setId_pregunta(preguntaId);
+                    r.setValor(valor);
 
-            }
+                    daoRespuesta.save(r);
+                }
+
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+
     }
 }

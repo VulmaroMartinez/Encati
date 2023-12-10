@@ -343,7 +343,7 @@
                 onclick="limpiar()">Limpiar
         </button>
         <button type="button" id="guardarBtn" class="btn "
-                style="background-color: rgb(119, 120, 121); color: aliceblue;" onclick="location.reload()" disabled>Guardar
+                style="background-color: rgb(119, 120, 121); color: aliceblue;" disabled>Guardar
         </button>
 
     </div>
@@ -353,7 +353,7 @@
     </button>
 
     <button type="button" class="btn "
-            style="background-color: #001256; color: #c1e8ff; position: absolute; right: 7rem;"><a href="resumen.jsp">Resumen</a>
+            style="background-color: #001256; color: #c1e8ff; position: absolute; right: 7rem;"><a href="resumencontroller">Resumen</a>
     </button>
 
 </div>
@@ -378,6 +378,15 @@
             icon: "error",
             title: "Oops...",
             text: "No se guardaron las respuestas"
+        });
+    }
+
+    function error409(){
+        console.log("Aquí avisa que ya se guardaron las respuestas");
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Ya hay respuestas para esta encuesta y tiendita"
         });
     }
 </script>

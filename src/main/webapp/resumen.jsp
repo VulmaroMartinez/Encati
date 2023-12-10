@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -28,11 +29,11 @@
                     Encuestas
                 </div>
 
-                <select class="form-select" aria-label="Seleccione una encuesta" style="text-align: center;" id="encuesta">
+                <select class="form-select" aria-label="Seleccione una encuesta" style="text-align: center;" id="encuesta" onchange="redirigirTienditasPorcentaje()">
                     <option selected>Seleccionar encuesta</option>
-                    <option value="1">2023_V1</option>
-                    <option value="2">2023_V2</option>
-                    <option value="3">2023_V3</option>
+                    <c:forEach items="${encuestas}" var="encuesta">
+                        <option value="${encuesta.id_encuesta}">${encuesta.nombre}</option>
+                    </c:forEach>
                 </select>
             </form>
 
@@ -43,9 +44,9 @@
 
 <div class="content">
 
-    <h3>Nombre de la encuesta seleccionada</h3>
+    <h3>Aquí va el nombre de la encuesta</h3>
 
-    <table class="principal">
+    <table class="principal" id="tablaTienditas">
         <tbody>
 
         <tr  style="border: .2rem solid #001256;">
@@ -54,11 +55,17 @@
                 <h4 style="width: 19rem; text-align: center; font-weight: 700;">Porcentaje Individual</h4>
             </td>
         </tr>
+
+        <c:forEach var="resumen" items="${resumen}">
         <tr >
+            ${resumen.tiendita}
+            <!-- aquí se itera las encuestas -->
         </tr>
         <tr  style="border-bottom: .2rem solid #001256;">
-
+            ${resumen.porcentaje}%
+            <!-- aqui se iteran los porcentajes -->
         </tr>
+        </c:forEach>
         </tbody>
 
     </table>
@@ -75,7 +82,7 @@
 
     </div>
     <div class="buttons">
-        <button type="button" class="btn " style="background-color: #021024 !important; color: #c1e8ff;" > <a href="index.jsp">Realizar encuestas</a></button>
+        <button type="button" class="btn " style="background-color: #021024 !important; color: #c1e8ff;" > <a href="controller">Regresar</a></button>
 
     </div>
 
