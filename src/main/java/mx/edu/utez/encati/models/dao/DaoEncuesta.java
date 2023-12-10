@@ -56,6 +56,7 @@ public class DaoEncuesta {
                 r.setPorcentaje(rs.getDouble("Porcentaje"));
 
                 resumen.add(r);
+
             }
 
         } catch (SQLException e) {
@@ -64,4 +65,24 @@ public class DaoEncuesta {
         return resumen;
     }
 
+    public String findNombre(String encuestaId) {
+        String nombre = "";
+        MysqlConector conector = new MysqlConector();
+        Connection connect = conector.connect();
+
+        try{
+            PreparedStatement stmt = connect.prepareStatement("SELECT nombre FROM encuestas WHERE id_encuesta = ?");
+            stmt.setString(1, encuestaId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()){
+                nombre = rs.getString("nombre");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        return nombre;
+    }
 }

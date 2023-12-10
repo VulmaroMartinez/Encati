@@ -69,7 +69,7 @@ public class DaoRespuesta {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 int valor = rs.getInt("valor");
-                valores.add(valor);
+                valores.add(valor - 1);
             }
         } catch (SQLException e) {
             System.out.println("Error: " + e);

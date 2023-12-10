@@ -43,50 +43,34 @@
 
 
 <div class="content">
-
-    <h3>Aquí va el nombre de la encuesta</h3>
-
+    <h3>${encuestaNombre}</h3>
     <table class="principal" id="tablaTienditas">
         <tbody>
-
-        <tr  style="border: .2rem solid #001256;">
-            <td style=" border: .2rem solid #001256;"><h3 style="text-align: center;" >Tienditas</h3></td>
-            <td style=" width: 19rem; border: .2rem solid #001256; border-left: none;">
-                <h4 style="width: 19rem; text-align: center; font-weight: 700;">Porcentaje Individual</h4>
-            </td>
+        <tr style="border: .2rem solid #001256;">
+            <td style="border: .2rem solid #001256;"><h3 style="text-align: center;">Tienditas</h3></td>
+            <td style="width: 19rem; border: .2rem solid #001256; border-left: none;"><h4 style="width: 19rem; text-align: center; font-weight: 700;">Porcentaje Individual</h4></td>
         </tr>
-
         <c:forEach var="resumen" items="${resumen}">
-        <tr >
-            ${resumen.tiendita}
-            <!-- aquí se itera las encuestas -->
-        </tr>
-        <tr  style="border-bottom: .2rem solid #001256;">
-            ${resumen.porcentaje}%
-            <!-- aqui se iteran los porcentajes -->
-        </tr>
+            <tr>
+                <td style="border: .2rem solid #001256;"><h5 style="text-align: center;">${resumen.tiendita}</h5></td>
+                <td style="width: 19rem; border: .2rem solid #001256; border-left: none;"><h5 style="width: 19rem; text-align: center; font-weight: 700;">${resumen.porcentaje}%</h5></td>
+            </tr>
         </c:forEach>
         </tbody>
-
     </table>
-
     <div class="por">
         <div class="c">
             <div class="palabra">
                 Porcentaje total
             </div>
             <div class="porcentaje" id="porcentaje">
-                0%
+                ${porcentajeEnTotal}%
             </div>
         </div>
-
     </div>
     <div class="buttons">
-        <button type="button" class="btn " style="background-color: #021024 !important; color: #c1e8ff;" > <a href="controller">Regresar</a></button>
-
+        <button type="button" class="btn" style="background-color: #021024 !important; color: #c1e8ff;"> <a href="controller">Regresar</a></button>
     </div>
-
-
 </div>
 
 

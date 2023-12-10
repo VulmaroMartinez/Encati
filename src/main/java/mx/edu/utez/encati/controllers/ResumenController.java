@@ -18,17 +18,32 @@ import java.util.List;
 public class ResumenController extends HttpServlet {
     DaoEncuesta daoEncuesta = new DaoEncuesta();
 
+    private double porcentajeEnTotalCalculo(List<ResumenBean> resumen){
+        double porcentajeEnTotal = 0;
+        for (ResumenBean r : resumen){
+            porcentajeEnTotal += r.getPorcentaje();
+        }
+        return porcentajeEnTotal / resumen.size();
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String encuestaId = req.getParameter("encuestaId");
 
         List encuestas = daoEncuesta.findAll();
+        String encuestaNombre = daoEncuesta.findNombre(encuestaId);
+        req.setAttribute("encuestaNombre", encuestaNombre);
         req.setAttribute("encuestas", encuestas);
+
 
         if (encuestaId != null){
             List resumen = daoEncuesta.ObtenerResumen(encuestaId);
             req.setAttribute("resumen", resumen);
+
+            double porcentajeEnTotal = porcentajeEnTotalCalculo(resumen);
+            req.setAttribute("porcentajeEnTotal", porcentajeEnTotal);
+            System.out.println(porcentajeEnTotal);
         }
 
         req.getRequestDispatcher("/resumen.jsp").forward(req, resp);
