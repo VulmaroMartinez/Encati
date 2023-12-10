@@ -61,7 +61,8 @@ public class DaoRespuesta {
 
         try{
             PreparedStatement stmt =
-                    connect.prepareStatement("SELECT valor FROM respuestas WHERE tiendita_id = ? and encuesta_id = ?");
+                    connect.prepareStatement("SELECT valor FROM respuestas" +
+                            " WHERE tiendita_id = ? and encuesta_id = ?");
 
             stmt.setString(1, tienditaId);
             stmt.setString(2, encuestaId);

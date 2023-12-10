@@ -19,12 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @WebServlet(name = "Controller", urlPatterns = "/controller")
 public class Controller extends HttpServlet {
 
     DaoTiendita daoTiendita = new DaoTiendita();
     DaoEncuesta daoEncuesta = new DaoEncuesta();
     DaoRespuesta daoRespuesta = new DaoRespuesta();
+
 
 
     @Override
@@ -40,19 +42,29 @@ public class Controller extends HttpServlet {
         req.setAttribute("tienditas", tienditas);
 
 
-        if (!daoRespuesta.exists(tienda, encuesta)) {
+        if (daoRespuesta.exists(tienda, encuesta)) {
             List<Integer> valores = daoRespuesta.obtenerRespuestas(tienda, encuesta);
-
+            try {
             // Convierte la lista a un array de int para facilitar la serialización a JSON
             int[] valoresArray = valores.stream().mapToInt(Integer::intValue).toArray();
 
 
-            try {
-                JSONArray jsonArray = new JSONArray(valoresArray);
-                // Establece el tipo de contenido y escribe la respuesta
+
+                JSONArray jsonArray = new JSONArray();
+                for (int valor : valoresArray) {
+                    jsonArray.put(valor);
+                }
+
+// Construye un objeto JSON con el array como único elemento
+                JSONObject jsonResponse = new JSONObject();
+                jsonResponse.put("valores", jsonArray);
+
+// Establece el tipo de contenido y escribe la respuesta
                 resp.setContentType("application/json");
                 resp.setCharacterEncoding("UTF-8");
-                resp.getWriter().write(jsonArray.toString());
+                resp.getWriter().write(jsonResponse.toString());
+                System.out.println(jsonResponse);
+                return;
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -65,7 +77,7 @@ public class Controller extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String body = req.getReader().lines().collect(Collectors.joining());
 
         try {

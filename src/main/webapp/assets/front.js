@@ -374,28 +374,114 @@ xhr.send(JSON.stringify(data));
 console.log(JSON.stringify(data));
 }
 
-document.getElementById('encuesta').addEventListener('change', function () {
-    var tiendaId = document.getElementById('tienda').value;
-    var encuestaId = encuestaSelect.options[encuestaSelect.selectedIndex].value;
+function actualizarRespuesta(respuestaId, valores) {
+    var respuestaElement = document.getElementById(respuestaId);
 
-    if (tiendaId !== '' && encuestaId !== '') {
-        // Realiza una solicitud AJAX para obtener los datos del servlet
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Parsea el JSON recibido
-                var valores = JSON.parse(xhr.responseText);
+    // Limpiamos el contenido actual
+    respuestaElement.innerHTML = "";
 
-                // Accede al contenedor HTML y muestra los valores
-                //Aquí va el código de anett para mostrarlos en el front
-
-            }
+    // Copiamos todas las propiedades
+    for (var i = 0; i < valores.length; i++) {
+        var div = document.createElement("div");
+        div.classList.add("mala", "regular", "buena", "mbuena", "excelente");
+        div.innerHTML = '<i class="bi bi-emoji-' + obtenerEmoji(i) + '-fill"></i>';
+        div.onclick = function() {
+            copiarPropiedades(this, respuestaId);
         };
-
-        // Reemplaza 'controller' con la URL de tu servlet
-        xhr.open('GET', 'controller?tiendaId=' + tiendaId + '&encuestaId=' + encuestaId, true);
-        xhr.send();
+        respuestaElement.appendChild(div);
     }
+}
+
+function obtenerEmoji(indice) {
+    switch (indice) {
+        case 0: return "angry";
+        case 1: return "frown";
+        case 2: return "neutral";
+        case 3: return "smile";
+        case 4: return "laughing";
+        default: return "";
+    }
+}
+
+function copiarPropiedades(elemento, respuestaId) {
+    // Aquí copias las propiedades según sea necesario
+    var color = window.getComputedStyle(elemento).color;
+    var icon = elemento.querySelector("i").outerHTML;
+
+    // Asumo que estás utilizando el mismo esquema de colores y valores que antes
+    var valor = obtenerValor(color);
+
+    // Puedes asignar el valor a tu objeto global correspondiente
+    asignarValor(respuestaId, valor);
+
+    // Actualizar el porcentaje y hacer otras operaciones si es necesario
+    actualizarPorcentaje();
+}
+
+function asignarValor(respuestaId, valor) {
+    switch (respuestaId) {
+        case "respFun":
+            f = valor;
+            break;
+        case "resConf":
+            c = valor;
+            break;
+        case "resUs":
+            u = valor;
+            break;
+        case "resRen":
+            r = valor;
+            break;
+        case "resMan":
+            m = valor;
+            break;
+        case "resPor":
+            p = valor;
+            break;
+        case "resSeg":
+            s = valor;
+            break;
+        case "resCom":
+            com = valor;
+            break;
+
+    }
+}
+
+
+document.getElementById('encuesta').addEventListener('change', function () {
+    var tiendaSelect = document.getElementById('tienda');
+    var encuestaSelect2 = document.getElementById('encuesta');
+    var tiendaId = tiendaSelect.options[tiendaSelect.selectedIndex].value;
+    var encuestaId = encuestaSelect2.options[encuestaSelect2.selectedIndex].value;
+
+    var url = 'controller?tiendaId=' + tiendaId + '&encuestaId=' + encuestaId;
+
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la solicitud: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            actualizarRespuesta("respFun", data);
+            actualizarRespuesta("resConf", data);
+            actualizarRespuesta("resUs", data);
+            actualizarRespuesta("resRen", data);
+            actualizarRespuesta("resMan", data);
+            actualizarRespuesta("resPor", data);
+            actualizarRespuesta("resSeg", data);
+            actualizarRespuesta("resCom", data);
+
+            // Procesa los datos recibidos del servidor aquí
+        })
+        .catch(error => {
+            console.error('Error al realizar la solicitud:', error);
+        });
+
 });
 
 function redirigirTienditasPorcentaje() {
@@ -404,3 +490,132 @@ function redirigirTienditasPorcentaje() {
 
     window.location.href = "resumencontroller?encuestaId=" + encuestaId;
 }
+
+
+
+
+/*
+if (tiendaId !== '' && encuestaId !== '') {
+    // Realiza una solicitud AJAX para obtener los datos del servlet
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText);
+
+                try {
+                    var jsonRequest = JSON.(xhr.responseText);
+                    var valoresArray = jsonResponse.valores;
+                    if (Array.isArray(valoresArray)) {
+                        console.log(valoresArray);
+                    } else {
+                        console.error('La respuesta del servidor no es un array de números.');
+                    }
+                } catch (error) {
+                    console.error('Error al analizar la respuesta JSON:', error);
+                }
+            } else {
+                console.error('Error en la solicitud AJAX. Código de estado:', xhr.status);
+            }
+        }
+    };
+
+    // Reemplaza 'controller' con la URL de tu servlet
+    xhr.open('GET', 'controller?tiendaId=' + tiendaId + '&encuestaId=' + encuestaId, true);
+    xhr.send();
+}
+
+
+ var valoresArray = data.valores;
+            //mostrar en la vista los valores seleccionados
+            var respFun = document.getElementById("respFun");
+            var row = document.getElementById("Funcionalidad");
+            var color = valoresArray[0].color;
+            var icon = valoresArray[0].icon;
+            var text = valoresArray[0].text;
+            respFun.style.color = color;
+            respFun.innerHTML = icon + "<br>" + text;
+            f = obtenerValor(color);
+
+            row.style.backgroundColor = "rgba" + color.slice(3, -1) + ", 0.2)";
+            actualizarPorcentaje();
+            //confiabilidad
+            var resConf = document.getElementById("resConf");
+            var row = document.getElementById("Confiabilidad");
+            var color = valoresArray[1].color;
+            var icon = valoresArray[1].icon;
+            var text = valoresArray[1].text;
+            resConf.style.color = color;
+            resConf.innerHTML = icon + "<br>" + text;
+            c = obtenerValor(color);
+            row.style.backgroundColor = "rgba" + color.slice(3, -1) + ", 0.2)";
+            actualizarPorcentaje();
+            //usabilidad
+            var resUs = document.getElementById("resUs");
+            var row = document.getElementById("Usabilidad");
+            var color = valoresArray[2].color;
+            var icon = valoresArray[2].icon;
+            var text = valoresArray[2].text;
+            resUs.style.color = color;
+            resUs.innerHTML = icon + "<br>" + text;
+            u = obtenerValor(color);
+            row.style.backgroundColor = "rgba" + color.slice(3, -1) + ", 0.2)";
+            actualizarPorcentaje();
+            //rendimiento
+            var resRen = document.getElementById("resRen");
+            var row = document.getElementById("Rendimiento");
+            var color = valoresArray[3].color;
+            var icon = valoresArray[3].icon;
+            var text = valoresArray[3].text;
+            resRen.style.color = color;
+            resRen.innerHTML = icon + "<br>" + text;
+            r = obtenerValor(color);
+            row.style.backgroundColor = "rgba" + color.slice(3, -1) + ", 0.2)";
+            actualizarPorcentaje();
+            //mantenimiento
+            var resMan = document.getElementById("resMan");
+            var row = document.getElementById("Mantenimiento");
+            var color = valoresArray[4].color;
+            var icon = valoresArray[4].icon;
+            var text = valoresArray[4].text;
+            resMan.style.color = color;
+            resMan.innerHTML = icon + "<br>" + text;
+            m = obtenerValor(color);
+            row.style.backgroundColor = "rgba" + color.slice(3, -1) + ", 0.2)";
+            actualizarPorcentaje();
+            //portabilidad
+            var resPor = document.getElementById("resPor");
+            var row = document.getElementById("Portabilidad");
+            var color = valoresArray[5].color;
+            var icon = valoresArray[5].icon;
+            var text = valoresArray[5].text;
+            resPor.style.color = color;
+            resPor.innerHTML = icon + "<br>" + text;
+            p = obtenerValor(color);
+            row.style.backgroundColor = "rgba" + color.slice(3, -1) + ", 0.2)";
+            actualizarPorcentaje();
+            //seguridad
+            var resSeg = document.getElementById("resSeg");
+            var row = document.getElementById("Seguridad");
+            var color = valoresArray[6].color;
+            var icon = valoresArray[6].icon;
+            var text = valoresArray[6].text;
+            resSeg.style.color = color;
+            resSeg.innerHTML = icon + "<br>" + text;
+            s = obtenerValor(color);
+            row.style.backgroundColor = "rgba" + color.slice(3, -1) + ", 0.2)";
+            actualizarPorcentaje();
+            //compatibilidad
+            var resCom = document.getElementById("resCom");
+            var row = document.getElementById("Compatibilidad");
+            var color = valoresArray[7].color;
+            var icon = valoresArray[7].icon;
+            var text = valoresArray[7].text;
+            resCom.style.color = color;
+            resCom.innerHTML = icon + "<br>" + text;
+            com = obtenerValor(color);
+            row.style.backgroundColor = "rgba" + color.slice(3, -1) + ", 0.2)";
+            actualizarPorcentaje();
+
+
+ */
