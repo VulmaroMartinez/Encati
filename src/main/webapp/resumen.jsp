@@ -69,7 +69,7 @@
         </div>
     </div>
     <div class="buttons">
-        <button type="button" class="btn" style="background-color: #021024 !important; color: #c1e8ff;"> <a href="controller">Regresar</a></button>
+        <button type="button" class="btn" style="background-color: #021024 !important; color: #c1e8ff;"> <a href="http://localhost:8080/Encati_war_exploded/controller">Regresar</a></button>
     </div>
 </div>
 
