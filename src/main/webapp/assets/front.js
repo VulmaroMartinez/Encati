@@ -374,81 +374,6 @@ xhr.send(JSON.stringify(data));
 console.log(JSON.stringify(data));
 }
 
-function actualizarRespuesta(respuestaId, valores) {
-    var respuestaElement = document.getElementById(respuestaId);
-
-    // Limpiamos el contenido actual
-    respuestaElement.innerHTML = "";
-
-    // Copiamos todas las propiedades
-    for (var i = 0; i < valores.length; i++) {
-        var div = document.createElement("div");
-        div.classList.add("mala", "regular", "buena", "mbuena", "excelente");
-        div.innerHTML = '<i class="bi bi-emoji-' + obtenerEmoji(i) + '-fill"></i>';
-        div.onclick = function() {
-            copiarPropiedades(this, respuestaId);
-        };
-        respuestaElement.appendChild(div);
-    }
-}
-
-function obtenerEmoji(indice) {
-    switch (indice) {
-        case 0: return "angry";
-        case 1: return "frown";
-        case 2: return "neutral";
-        case 3: return "smile";
-        case 4: return "laughing";
-        default: return "";
-    }
-}
-
-function copiarPropiedades(elemento, respuestaId) {
-    // Aquí copias las propiedades según sea necesario
-    var color = window.getComputedStyle(elemento).color;
-    var icon = elemento.querySelector("i").outerHTML;
-
-    // Asumo que estás utilizando el mismo esquema de colores y valores que antes
-    var valor = obtenerValor(color);
-
-    // Puedes asignar el valor a tu objeto global correspondiente
-    asignarValor(respuestaId, valor);
-
-    // Actualizar el porcentaje y hacer otras operaciones si es necesario
-    actualizarPorcentaje();
-}
-
-function asignarValor(respuestaId, valor) {
-    switch (respuestaId) {
-        case "respFun":
-            f = valor;
-            break;
-        case "resConf":
-            c = valor;
-            break;
-        case "resUs":
-            u = valor;
-            break;
-        case "resRen":
-            r = valor;
-            break;
-        case "resMan":
-            m = valor;
-            break;
-        case "resPor":
-            p = valor;
-            break;
-        case "resSeg":
-            s = valor;
-            break;
-        case "resCom":
-            com = valor;
-            break;
-
-    }
-}
-
-
 document.getElementById('encuesta').addEventListener('change', function () {
     var tiendaSelect = document.getElementById('tienda');
     var encuestaSelect2 = document.getElementById('encuesta');
@@ -467,14 +392,6 @@ document.getElementById('encuesta').addEventListener('change', function () {
         })
         .then(data => {
             console.log(data);
-            actualizarRespuesta("respFun", data);
-            actualizarRespuesta("resConf", data);
-            actualizarRespuesta("resUs", data);
-            actualizarRespuesta("resRen", data);
-            actualizarRespuesta("resMan", data);
-            actualizarRespuesta("resPor", data);
-            actualizarRespuesta("resSeg", data);
-            actualizarRespuesta("resCom", data);
 
             // Procesa los datos recibidos del servidor aquí
         })
@@ -490,7 +407,6 @@ function redirigirTienditasPorcentaje() {
 
     window.location.href = "resumencontroller?encuestaId=" + encuestaId;
 }
-
 
 
 
