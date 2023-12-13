@@ -47,12 +47,12 @@
     <table class="principal" id="tablaTienditas">
         <tbody>
         <tr style="border: .2rem solid #001256;">
-            <td style="border: .2rem solid #001256;"><h3 style="text-align: center;">Tienditas</h3></td>
+            <td style="border: .2rem solid #001256; text-align: center;"><h3>Tienditas</h3></td>
             <td style="width: 19rem; border: .2rem solid #001256; border-left: none;"><h4 style="width: 19rem; text-align: center; font-weight: 700;">Porcentaje Individual</h4></td>
         </tr>
         <c:forEach var="resumen" items="${resumen}">
             <tr>
-                <td style="border: .2rem solid #001256;"><h5 style="text-align: center;">${resumen.tiendita}</h5></td>
+                <td style="border: .2rem solid #001256; text-align: center";><h5>${resumen.tiendita}</h5></td>
                 <td style="width: 19rem; border: .2rem solid #001256; border-left: none;"><h5 style="width: 19rem; text-align: center; font-weight: 700;">${resumen.porcentaje}%</h5></td>
             </tr>
         </c:forEach>
@@ -76,5 +76,26 @@
 
 
 </body>
-<script src="assets/front.js"></script>
+<script src="assets/prueba.js"></script>
+<script>
+    window.onload = function () {
+        let porcentaje = document.getElementById('porcentaje').textContent;
+        porcentaje = parseInt(porcentaje.replace('%', '')); // Convierte a número y elimina el signo de porcentaje
+
+        let porcentajeElement = document.getElementById('porcentaje');
+
+        if (porcentaje >= 0 && porcentaje <= 69) {
+            porcentajeElement.style.backgroundColor = "red";
+        } else if (porcentaje >= 70 && porcentaje <= 89) {
+            porcentajeElement.style.backgroundColor = "darkgoldenrod";
+        } else if (porcentaje >= 90 && porcentaje <= 95) {
+            porcentajeElement.style.backgroundColor = "green";
+        } else if (porcentaje >= 96 && porcentaje <= 100) {
+            porcentajeElement.style.backgroundColor = "blue";
+        } else {
+            porcentajeElement.style.backgroundColor = "black";
+        }
+    };
+</script>
+
 </html>

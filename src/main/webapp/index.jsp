@@ -112,7 +112,7 @@
                     </div>
                 </div>
             </td>
-            <td class="respuesta">
+            <td class="respuesta" id="respFunciona">
                 <div class="re" id="respFun">
 
                 </div>
@@ -141,7 +141,7 @@
                     </div>
                 </div>
             </td>
-            <td class="respuesta">
+            <td class="respuesta" id="resconfi">
                 <div class="re" id="resConf">
 
                 </div>
@@ -170,7 +170,7 @@
                     </div>
                 </div>
             </td>
-            <td class="respuesta">
+            <td class="respuesta" id="resUsa">
                 <div class="re" id="resUs">
 
                 </div>
@@ -199,7 +199,7 @@
                     </div>
                 </div>
             </td>
-            <td class="respuesta">
+            <td class="respuesta" id="resRendi">
                 <div class="re" id="resRen">
 
                 </div>
@@ -228,7 +228,7 @@
                     </div>
                 </div>
             </td>
-            <td class="respuesta">
+            <td class="respuesta" id="resMante">
                 <div class="re" id="resMan">
 
                 </div>
@@ -257,7 +257,7 @@
                     </div>
                 </div>
             </td>
-            <td class="respuesta">
+            <td class="respuesta" id="resPorta">
                 <div class="re" id="resPor">
 
                 </div>
@@ -286,7 +286,7 @@
                     </div>
                 </div>
             </td>
-            <td class="respuesta">
+            <td class="respuesta" id="resSegu">
                 <div class="re" id="resSeg">
 
                 </div>
@@ -315,7 +315,7 @@
                     </div>
                 </div>
             </td>
-            <td class="respuesta">
+            <td class="respuesta"id="resCompa">
                 <div class="re" id="resCom">
 
                 </div>
@@ -339,7 +339,7 @@
 
     <div class="buttons">
 
-        <button type="button" class="btn " style="background-color: #021024 !important; color: #c1e8ff;"
+        <button type="button" class="btn " style="background-color: #021024 !important; color: #c1e8ff;" id="limpiar"
                 onclick="limpiar()">Limpiar
         </button>
         <button type="button" id="guardarBtn" class="btn "
@@ -360,7 +360,7 @@
 
 </body>
 
-<script src="assets/front.js"></script>
+<script src="assets/prueba.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function mostrarexito() {

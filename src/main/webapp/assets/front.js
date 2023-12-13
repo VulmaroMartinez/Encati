@@ -392,6 +392,8 @@ document.getElementById('encuesta').addEventListener('change', function () {
         })
         .then(data => {
             console.log(data);
+            obtenerValor(data);
+
 
             // Procesa los datos recibidos del servidor aquí
         })
